@@ -81,8 +81,8 @@ def game_init():
                 x += 1
             y -= 1
             x = 0
-    p = player_init(0, 18)
     o = overlay_init(0, 0)
+    p = player_init(0, 18)
     return (p, blocks, o)
 
 
