@@ -106,7 +106,6 @@ def game_mainloop(player_id, block_ids, overlay_id):
         key_code = cog.input_key_code_pressed()
         print("KEYCODE {}".format(key_code))
         vel_delta = 0.0001
-        cam_vel_delta = 0.0005
         if key_code == KeyCodes.A:
             player.vel.x = -vel_delta
         if key_code == KeyCodes.D:
@@ -115,6 +114,7 @@ def game_mainloop(player_id, block_ids, overlay_id):
             player.vel.y = vel_delta
         if key_code == KeyCodes.S:
             player.vel.y = -vel_delta
+        '''
         if key_code == KeyCodes.LEFT:
             overlay.vel.x = -cam_vel_delta
         if key_code == KeyCodes.RIGHT:
@@ -123,6 +123,7 @@ def game_mainloop(player_id, block_ids, overlay_id):
             overlay.vel.y = cam_vel_delta
         if key_code == KeyCodes.DOWN:
             overlay.vel.y = -cam_vel_delta
+        '''
     if cog.input_key_depressed():
         key_code = cog.input_key_code_depressed()
         print("KEYCODE DEPRESSED {}".format(key_code))
@@ -134,6 +135,7 @@ def game_mainloop(player_id, block_ids, overlay_id):
             player.vel.y = 0
         if key_code == KeyCodes.S:
             player.vel.y = 0
+        '''
         if key_code == KeyCodes.LEFT:
             overlay.vel.x = 0
         if key_code == KeyCodes.RIGHT:
@@ -141,6 +143,18 @@ def game_mainloop(player_id, block_ids, overlay_id):
         if key_code == KeyCodes.UP:
             overlay.vel.y = 0
         if key_code == KeyCodes.DOWN:
+            overlay.vel.y = 0
+        '''
+    cam_vel_delta = 0.0002
+    if cog.input_joystick_x_pressed():
+        print("HIHO")
+        overlay.vel.x = cam_vel_delta * cog.input_joystick_x_value()
+    if cog.input_joystick_y_pressed():
+        overlay.vel.y = cam_vel_delta * cog.input_joystick_y_value()
+    if cog.input_joystick_depressed():
+        if cog.input_joystick_x_depressed():
+            overlay.vel.x = 0
+        if cog.input_joystick_y_depressed():
             overlay.vel.y = 0
 
 
