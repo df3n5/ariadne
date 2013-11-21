@@ -57,7 +57,8 @@ def game_init():
         for line in lvlfile:
             for c in line:
                 b = block_init(c, x, y)
-                blocks.append(b)
+                if not b is None:
+                    blocks.append(b)
                 x += 1
             y -= 1
             x = 0
@@ -67,10 +68,19 @@ def game_init():
 
 def game_mainloop(player_id, block_ids):
     player = cog.sprite_get(player_id)
+    for b in block_ids:
+        if(cog.sprite_collides_sprite(player_id, b)):
+            print("Collision")
+            #TODO: Response properly
+            player.pos.x = player.pos.x - (player.vel.x * 10)
+            player.vel.y = player.pos.y - (player.vel.y * 10)
+            player.vel.x = 0
+            player.vel.y = 0
+            break
     if cog.input_key_pressed():
         key_code = cog.input_key_code_pressed()
         print("KEYCODE {}".format(key_code))
-        vel_delta = 0.001
+        vel_delta = 0.0001
         if key_code == KeyCodes.A:
             player.vel.x = -vel_delta
         if key_code == KeyCodes.D:
