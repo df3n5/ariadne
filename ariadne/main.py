@@ -114,6 +114,7 @@ def game_mainloop(player_id, block_ids, overlay_id):
             player.vel.y = vel_delta
         if key_code == KeyCodes.S:
             player.vel.y = -vel_delta
+        # Keep this in case need to test without joystick
         '''
         if key_code == KeyCodes.LEFT:
             overlay.vel.x = -cam_vel_delta
@@ -135,6 +136,7 @@ def game_mainloop(player_id, block_ids, overlay_id):
             player.vel.y = 0
         if key_code == KeyCodes.S:
             player.vel.y = 0
+        # Keep this in case need to test without joystick
         '''
         if key_code == KeyCodes.LEFT:
             overlay.vel.x = 0
@@ -147,7 +149,6 @@ def game_mainloop(player_id, block_ids, overlay_id):
         '''
     cam_vel_delta = 0.0002
     if cog.input_joystick_x_pressed():
-        print("HIHO")
         overlay.vel.x = cam_vel_delta * cog.input_joystick_x_value()
     if cog.input_joystick_y_pressed():
         overlay.vel.y = cam_vel_delta * cog.input_joystick_y_value()
