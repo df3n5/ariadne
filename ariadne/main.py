@@ -1,3 +1,4 @@
+import math
 import random
 import time
 
@@ -158,12 +159,10 @@ def game_mainloop(player_id, block_ids, overlay_id, minotaur_id):
                 #TODO: Response properly
                 #player.pos.x = player.pos.x - (player.vel.x * 10)
                 #player.pos.y = player.pos.y - (player.vel.y * 10)
-                '''
                 player.pos.x = last_pos_x
                 player.pos.y = last_pos_y
                 player.vel.x = 0
                 player.vel.y = 0
-                '''
                 break
         cam_vel_delta = 0.0002
         if cog.input_key_pressed():
@@ -228,14 +227,20 @@ def game_mainloop(player_id, block_ids, overlay_id, minotaur_id):
             #minotaur.vel.y = 0.0
             minotaur_speed = 0.00004
             minotaur.transition_millis = 800
-            minotaur.vel.x = (player.pos.x - minotaur.pos.x) * minotaur_speed
-            minotaur.vel.y = (player.pos.y - minotaur.pos.y) * minotaur_speed
         else:
             #minotaur_speed = 0.00005
             minotaur.transition_millis = 300
             minotaur_speed = 0.0002
-            minotaur.vel.x = (player.pos.x - minotaur.pos.x) * minotaur_speed
-            minotaur.vel.y = (player.pos.y - minotaur.pos.y) * minotaur_speed
+        #normalize
+        minotaur.vel.x = (player.pos.x - minotaur.pos.x) * minotaur_speed
+        minotaur.vel.y = (player.pos.y - minotaur.pos.y) * minotaur_speed
+        l = math.sqrt(pow(minotaur.vel.x, 2) + pow(minotaur.vel.y, 2))
+        minotaur.vel.x /= l
+        minotaur.vel.y /= l
+        #Then add speed
+        minotaur.vel.x *= minotaur_speed
+        minotaur.vel.y *= minotaur_speed
+
 
         #Lose condition:Minotaur collides with you
         if cog.anim_dist_sprite(minotaur_id, player_id) < 0.15:
@@ -244,7 +249,6 @@ def game_mainloop(player_id, block_ids, overlay_id, minotaur_id):
             minotaur.pos.x = minotaur_start_pos_x
             minotaur.pos.y = minotaur_start_pos_y
 
-        import math
         print("HEY {}".format(math.sqrt(pow(goal_x - player.pos.x, 2) + pow(goal_y - player.pos.y, 2))))
         if math.sqrt(pow(goal_x - player.pos.x, 2) + pow(goal_y - player.pos.y, 2)) < 0.05:
             t = cog.text_add()
@@ -275,6 +279,7 @@ def game_mainloop(player_id, block_ids, overlay_id, minotaur_id):
 
 if __name__ == "__main__":
     cog.init()
+    #cog.toggle_fullscreen()
     player_id, block_ids, overlay_id, minotaur_id = game_init()
     while not cog.hasquit():
         cog.loopstep()
