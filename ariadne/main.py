@@ -225,12 +225,12 @@ def game_mainloop(player_id, block_ids, overlay_id, minotaur_id):
         if cog.anim_dist_sprite(minotaur_id, overlay_id) < radius:
             #minotaur.vel.x = 0.0
             #minotaur.vel.y = 0.0
-            minotaur_speed = 0.00004
+            minotaur_speed = 0.00002
             minotaur.transition_millis = 800
         else:
             #minotaur_speed = 0.00005
             minotaur.transition_millis = 300
-            minotaur_speed = 0.0002
+            minotaur_speed = 0.0001
         #normalize
         minotaur.vel.x = (player.pos.x - minotaur.pos.x) * minotaur_speed
         minotaur.vel.y = (player.pos.y - minotaur.pos.y) * minotaur_speed
